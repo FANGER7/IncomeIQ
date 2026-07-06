@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse("Hello, IncomeIQ!")
+    return render(request, "frontend/index.html")

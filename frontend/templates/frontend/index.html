@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IncomeIQ Predictor</title>
+</head>
+<body>
+
+<h1>IncomeIQ Predictor</h1>
+
+<form id="predictForm">
+
+    <input type="number" name="age" placeholder="Age"><br><br>
+
+    <input type="text" name="workclass" placeholder="Workclass"><br><br>
+
+    <input type="number" name="fnlwgt" placeholder="Fnlwgt"><br><br>
+
+    <input type="text" name="education" placeholder="Education"><br><br>
+
+    <input type="number" name="education.num" placeholder="Education Num"><br><br>
+
+    <input type="text" name="marital.status" placeholder="Marital Status"><br><br>
+
+    <input type="text" name="occupation" placeholder="Occupation"><br><br>
+
+    <input type="text" name="relationship" placeholder="Relationship"><br><br>
+
+    <input type="text" name="race" placeholder="Race"><br><br>
+
+    <input type="text" name="sex" placeholder="Sex"><br><br>
+
+    <input type="number" name="capital.gain" placeholder="Capital Gain"><br><br>
+
+    <input type="number" name="capital.loss" placeholder="Capital Loss"><br><br>
+
+    <input type="number" name="hours.per.week" placeholder="Hours per Week"><br><br>
+
+    <input type="text" name="native.country" placeholder="Native Country"><br><br>
+
+    <button type="submit">Predict</button>
+
+</form>
+
+<h2 id="result"></h2>
+
+<script>
+
+document.getElementById("predictForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const form = new FormData(this);
+
+    const data = Object.fromEntries(form.entries());
+
+    data.age = Number(data.age);
+    data.fnlwgt = Number(data.fnlwgt);
+    data["education.num"] = Number(data["education.num"]);
+    data["capital.gain"] = Number(data["capital.gain"]);
+    data["capital.loss"] = Number(data["capital.loss"]);
+    data["hours.per.week"] = Number(data["hours.per.week"]);
+
+    const response = await fetch("/predictor/predict/",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").innerHTML =
+        `Prediction: ${result.label}<br>
+         Probability: ${result.probability}`;
+
+});
+
+</script>
+
+</body>
+</html>
