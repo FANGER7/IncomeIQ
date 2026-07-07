@@ -28,7 +28,7 @@
 
 <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
 
-<nav class="iq-nav">
+<nav class="iq-nav" aria-label="Primary">
   <div class="container iq-nav-inner">
     <div class="brand">
       <span class="brand-mark"><i class="bi bi-cpu"></i></span>
@@ -47,11 +47,71 @@
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" role="banner" aria-label="IncomeIQ — AI powered income prediction">
+
+  <div class="hero-visual" aria-hidden="true">
+    <svg class="hero-visual-svg" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <defs>
+        <radialGradient id="heroOrbCore" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--hero-orb-core, #7cf1ff)" stop-opacity="0.85"/>
+          <stop offset="45%" stop-color="var(--hero-orb-mid, #7c8cff)" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="var(--hero-orb-edge, #7c8cff)" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="heroMeshLine" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--hero-line-a, #8fb8ff)" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="var(--hero-line-b, #b98fff)" stop-opacity="0.15"/>
+        </linearGradient>
+        <filter id="heroGlowSoft" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="18" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <circle class="hero-orb-glow" cx="600" cy="560" r="360" fill="url(#heroOrbCore)"></circle>
+
+      <g class="hero-mesh-group" filter="url(#heroGlowSoft)">
+        <g class="hero-mesh-lines" stroke="url(#heroMeshLine)" stroke-width="1.1" fill="none">
+          <line x1="230" y1="420" x2="520" y2="300"></line>
+          <line x1="520" y1="300" x2="840" y2="360"></line>
+          <line x1="840" y1="360" x2="980" y2="580"></line>
+          <line x1="980" y1="580" x2="820" y2="800"></line>
+          <line x1="820" y1="800" x2="520" y2="860"></line>
+          <line x1="520" y1="860" x2="260" y2="720"></line>
+          <line x1="260" y1="720" x2="230" y2="420"></line>
+          <line x1="520" y1="300" x2="600" y2="560"></line>
+          <line x1="840" y1="360" x2="600" y2="560"></line>
+          <line x1="980" y1="580" x2="600" y2="560"></line>
+          <line x1="820" y1="800" x2="600" y2="560"></line>
+          <line x1="520" y1="860" x2="600" y2="560"></line>
+          <line x1="260" y1="720" x2="600" y2="560"></line>
+          <line x1="230" y1="420" x2="600" y2="560"></line>
+        </g>
+        <g class="hero-mesh-nodes" fill="var(--hero-node-fill, #dce8ff)">
+          <circle cx="230" cy="420" r="4"></circle>
+          <circle cx="520" cy="300" r="5"></circle>
+          <circle cx="840" cy="360" r="4"></circle>
+          <circle cx="980" cy="580" r="5"></circle>
+          <circle cx="820" cy="800" r="4"></circle>
+          <circle cx="520" cy="860" r="5"></circle>
+          <circle cx="260" cy="720" r="4"></circle>
+          <circle class="hero-mesh-node-core" cx="600" cy="560" r="7"></circle>
+        </g>
+      </g>
+
+      <g class="hero-orbit-rings" fill="none" stroke="var(--hero-ring, #ffffff)" stroke-opacity="0.08">
+        <ellipse cx="600" cy="560" rx="420" ry="150"></ellipse>
+        <ellipse cx="600" cy="560" rx="150" ry="420"></ellipse>
+      </g>
+    </svg>
+  </div>
+
   <div class="container hero-inner">
 
     <div class="hero-top">
-      <div class="hero-eyebrow"><i class="bi bi-stars"></i> Binary income classifier · UCI Adult dataset</div>
+      <div class="hero-eyebrow"><i class="bi bi-stars" aria-hidden="true"></i> Binary income classifier · UCI Adult dataset</div>
     </div>
 
     <div class="hero-headline-block">
@@ -67,9 +127,11 @@
         sits above or below <span class="mono">$50K</span>, with a calibrated
         probability behind every call.
       </p>
-      <a href="#predict-section" class="hero-cta">
-        <span>Start a prediction</span>
-        <i class="bi bi-arrow-down-right"></i>
+
+      <a href="#predict-section" class="hero-cta" aria-label="Start a prediction — scroll to the prediction form">
+        <span class="hero-cta-glow" aria-hidden="true"></span>
+        <span class="hero-cta-label">Start Prediction</span>
+        <span class="hero-cta-icon" aria-hidden="true"><i class="bi bi-arrow-down-right"></i></span>
       </a>
     </div>
 
@@ -81,7 +143,7 @@
   </div>
 </header>
 
-<section class="capabilities-strip reveal-section">
+<section class="capabilities-strip reveal-section" aria-label="Platform capabilities and performance metrics">
   <div class="container capabilities-inner">
 
     <div class="hero-badges">
@@ -301,6 +363,7 @@
         <span class="btn-spinner" aria-hidden="true"></span>
       </button>
       <p class="form-error" id="form-error" role="alert"><i class="bi bi-exclamation-triangle"></i> <span class="form-error-text"></span></p>
+      <p class="ai-loading-status" id="ai-loading-status" aria-live="polite"></p>
     </form>
   </section>
 
@@ -336,6 +399,131 @@
     </div>
   </section>
 
+  <section class="ai-report-section glass reveal-section" id="ai-report-section" aria-labelledby="ai-report-heading">
+    <div class="card-glow"></div>
+    <div class="section-kicker"><span class="section-kicker-num">02.1</span><span class="section-kicker-line"></span><span class="section-kicker-label">AI Report</span></div>
+
+    <div class="ai-report-header">
+      <h2 id="ai-report-heading" class="section-title"><i class="bi bi-stars"></i> AI Prediction Report</h2>
+      <p class="section-subtitle">A full breakdown of how the model reasoned about this profile.</p>
+    </div>
+
+    <!-- Feature 7: Prediction Journey -->
+    <div class="journey-wrap" id="journey-wrap">
+      <div class="journey-step" data-step="1"><span class="journey-icon"><i class="bi bi-person-badge"></i></span><span class="journey-label">Profile</span></div>
+      <div class="journey-arrow"><i class="bi bi-chevron-down"></i></div>
+      <div class="journey-step" data-step="2"><span class="journey-icon"><i class="bi bi-diagram-3"></i></span><span class="journey-label">Feature Engineering</span></div>
+      <div class="journey-arrow"><i class="bi bi-chevron-down"></i></div>
+      <div class="journey-step" data-step="3"><span class="journey-icon"><i class="bi bi-cpu"></i></span><span class="journey-label">ML Pipeline</span></div>
+      <div class="journey-arrow"><i class="bi bi-chevron-down"></i></div>
+      <div class="journey-step" data-step="4"><span class="journey-icon"><i class="bi bi-percent"></i></span><span class="journey-label">Probability</span></div>
+      <div class="journey-arrow"><i class="bi bi-chevron-down"></i></div>
+      <div class="journey-step" data-step="5"><span class="journey-icon"><i class="bi bi-flag"></i></span><span class="journey-label">Prediction</span></div>
+    </div>
+
+    <!-- Feature 1: AI Prediction Report core rows -->
+    <div class="report-grid" id="report-grid">
+      <div class="report-row">
+        <span class="report-key"><i class="bi bi-patch-check"></i> Prediction</span>
+        <span class="report-value" id="report-prediction">--</span>
+      </div>
+      <div class="report-row">
+        <span class="report-key"><i class="bi bi-mortarboard"></i> Income Category</span>
+        <span class="report-value" id="report-category">--</span>
+      </div>
+      <div class="report-row">
+        <span class="report-key"><i class="bi bi-speedometer2"></i> Confidence</span>
+        <span class="report-value" id="report-confidence">--</span>
+      </div>
+      <div class="report-row">
+        <span class="report-key"><i class="bi bi-shield-exclamation"></i> Risk Level</span>
+        <span class="report-value" id="report-risk">--</span>
+      </div>
+    </div>
+
+    <div class="report-summary" id="report-summary">
+      <i class="bi bi-quote"></i>
+      <p id="report-summary-text">Run a prediction above to generate a personalized AI report.</p>
+    </div>
+
+    <!-- Feature 3: Confidence Analysis -->
+    <div class="subsection">
+      <h3 class="subsection-title"><i class="bi bi-bar-chart-steps"></i> Confidence Analysis</h3>
+      <div class="confidence-tier-row">
+        <span class="tier-pill" id="tier-pill"><i class="bi bi-dash-circle"></i> --</span>
+      </div>
+      <div class="confidence-metrics">
+        <div class="metric-row">
+          <span class="metric-label">Probability</span>
+          <div class="metric-track"><div class="metric-fill" id="metric-probability"></div></div>
+          <span class="metric-num" id="metric-probability-num">0%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Model Certainty</span>
+          <div class="metric-track"><div class="metric-fill" id="metric-certainty"></div></div>
+          <span class="metric-num" id="metric-certainty-num">0%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Prediction Stability</span>
+          <div class="metric-track"><div class="metric-fill" id="metric-stability"></div></div>
+          <span class="metric-num" id="metric-stability-num">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Profile Summary -->
+    <div class="subsection">
+      <h3 class="subsection-title"><i class="bi bi-person-lines-fill"></i> Profile Summary</h3>
+      <div class="profile-grid" id="profile-grid"></div>
+    </div>
+
+    <!-- Feature 4: AI Insights -->
+    <div class="subsection">
+      <h3 class="subsection-title"><i class="bi bi-lightbulb"></i> AI Insights</h3>
+      <div class="insights-grid" id="insights-grid"></div>
+    </div>
+
+    <!-- Feature 5: Income Factors -->
+    <div class="subsection">
+      <h3 class="subsection-title"><i class="bi bi-list-check"></i> Income Factors</h3>
+      <div class="factors-columns">
+        <div class="factors-col factors-positive">
+          <span class="factors-col-title"><i class="bi bi-check-circle"></i> Positive Factors</span>
+          <ul class="factors-list" id="factors-positive"></ul>
+        </div>
+        <div class="factors-col factors-negative">
+          <span class="factors-col-title"><i class="bi bi-x-circle"></i> Negative Factors</span>
+          <ul class="factors-list" id="factors-negative"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 6: Recommendations -->
+    <div class="subsection">
+      <h3 class="subsection-title"><i class="bi bi-signpost-2"></i> Recommendations</h3>
+      <p class="section-subtitle recommendations-disclaimer">These are general suggestions, not a guarantee of any income outcome.</p>
+      <ul class="recommendations-list" id="recommendations-list"></ul>
+    </div>
+
+    <!-- Feature 11: Prediction Comparison -->
+    <div class="subsection" id="comparison-section" style="display:none;">
+      <h3 class="subsection-title"><i class="bi bi-arrow-left-right"></i> Prediction Comparison</h3>
+      <div class="comparison-grid" id="comparison-grid"></div>
+    </div>
+
+    <!-- Feature 9 & 10: Export + Share -->
+    <div class="report-actions">
+      <button type="button" class="report-action-btn" id="download-report-btn"><i class="bi bi-download"></i> Download Report</button>
+      <div class="share-dropdown">
+        <button type="button" class="report-action-btn report-action-btn-ghost" id="share-btn"><i class="bi bi-share"></i> Share Result</button>
+        <div class="share-menu" id="share-menu">
+          <button type="button" data-copy="prediction"><i class="bi bi-clipboard-check"></i> Copy Prediction</button>
+          <button type="button" data-copy="report"><i class="bi bi-clipboard-data"></i> Copy AI Report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="history-card glass reveal-section" id="history-section" aria-labelledby="history-heading">
     <div class="card-glow"></div>
     <div class="section-kicker"><span class="section-kicker-num">03</span><span class="section-kicker-line"></span><span class="section-kicker-label">History</span></div>
@@ -350,6 +538,29 @@
       </div>
     </div>
 
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon"><i class="bi bi-collection"></i></span>
+        <span class="stat-num" id="stat-total">0</span>
+        <span class="stat-label">Total Predictions</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="bi bi-arrow-up-circle"></i></span>
+        <span class="stat-num" id="stat-above">0</span>
+        <span class="stat-label">Above 50K</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="bi bi-arrow-down-circle"></i></span>
+        <span class="stat-num" id="stat-below">0</span>
+        <span class="stat-label">Below 50K</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="bi bi-speedometer2"></i></span>
+        <span class="stat-num" id="stat-avg-confidence">0%</span>
+        <span class="stat-label">Average Confidence</span>
+      </div>
+    </div>
+
     <div class="table-wrap">
       <table class="history-table" id="history-table">
         <thead>
@@ -360,6 +571,7 @@
             <th>Hours/wk</th>
             <th>Label</th>
             <th>Probability</th>
+            <th class="th-expand" aria-hidden="true"></th>
           </tr>
         </thead>
         <tbody id="history-tbody">
@@ -397,6 +609,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
