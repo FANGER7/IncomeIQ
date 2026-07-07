@@ -1,82 +1,402 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en" data-bs-theme="dark">
 <head>
-    <title>IncomeIQ Predictor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IncomeIQ — AI Powered Income Prediction</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<h1>IncomeIQ Predictor</h1>
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="mesh-gradient"></div>
+  <div class="grid-overlay"></div>
+  <div class="grain-overlay"></div>
+  <div class="particles" id="particles"></div>
+</div>
 
-<form id="predictForm">
+<div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
 
-    <input type="number" name="age" placeholder="Age"><br><br>
+<nav class="iq-nav">
+  <div class="container iq-nav-inner">
+    <div class="brand">
+      <span class="brand-mark"><i class="bi bi-cpu"></i></span>
+      <span class="brand-name">IncomeIQ</span>
+    </div>
+    <div class="nav-links">
+      <a href="#predict-section" class="nav-link"><i class="bi bi-sliders"></i> Predict</a>
+      <a href="#history-section" class="nav-link"><i class="bi bi-clock-history"></i> History</a>
+      <span class="nav-status">
+        <span class="status-dot"></span> Model Online
+      </span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle light and dark mode">
+        <i class="bi bi-moon-stars" id="theme-toggle-icon"></i>
+      </button>
+    </div>
+  </div>
+</nav>
 
-    <input type="text" name="workclass" placeholder="Workclass"><br><br>
+<header class="hero">
+  <div class="container hero-inner">
 
-    <input type="number" name="fnlwgt" placeholder="Fnlwgt"><br><br>
+    <div class="hero-top">
+      <div class="hero-eyebrow"><i class="bi bi-stars"></i> Binary income classifier · UCI Adult dataset</div>
+    </div>
 
-    <input type="text" name="education" placeholder="Education"><br><br>
+    <div class="hero-headline-block">
+      <h1 class="hero-title">
+        <span class="hero-title-line">Income<span class="hero-title-accent">IQ</span></span>
+      </h1>
+      <p class="hero-subtitle">AI Powered Income Prediction</p>
+    </div>
 
-    <input type="number" name="education.num" placeholder="Education Num"><br><br>
+    <div class="hero-desc-row">
+      <p class="hero-desc">
+        Enter a demographic profile and the model estimates whether annual income
+        sits above or below <span class="mono">$50K</span>, with a calibrated
+        probability behind every call.
+      </p>
+      <a href="#predict-section" class="hero-cta">
+        <span>Start a prediction</span>
+        <i class="bi bi-arrow-down-right"></i>
+      </a>
+    </div>
 
-    <input type="text" name="marital.status" placeholder="Marital Status"><br><br>
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <span class="hero-scroll-line"></span>
+      <span class="hero-scroll-text">Scroll</span>
+    </div>
 
-    <input type="text" name="occupation" placeholder="Occupation"><br><br>
+  </div>
+</header>
 
-    <input type="text" name="relationship" placeholder="Relationship"><br><br>
+<section class="capabilities-strip reveal-section">
+  <div class="container capabilities-inner">
 
-    <input type="text" name="race" placeholder="Race"><br><br>
+    <div class="hero-badges">
+      <span class="tech-badge"><i class="bi bi-filetype-py"></i> Python</span>
+      <span class="tech-badge"><i class="bi bi-diagram-3"></i> Django</span>
+      <span class="tech-badge"><i class="bi bi-cpu"></i> Machine Learning</span>
+      <span class="tech-badge"><i class="bi bi-hdd-network"></i> REST API</span>
+      <span class="tech-badge"><i class="bi bi-graph-up"></i> Scikit-Learn</span>
+      <span class="tech-badge"><i class="bi bi-bootstrap"></i> Bootstrap</span>
+    </div>
 
-    <input type="text" name="sex" placeholder="Sex"><br><br>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <i class="bi bi-bullseye hero-stat-icon"></i>
+        <span class="hero-stat-num">95.8%</span>
+        <span class="hero-stat-label">Accuracy</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <i class="bi bi-ui-checks-grid hero-stat-icon"></i>
+        <span class="hero-stat-num">14</span>
+        <span class="hero-stat-label">Features</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <i class="bi bi-lightning-charge hero-stat-icon"></i>
+        <span class="hero-stat-num">&lt;1s</span>
+        <span class="hero-stat-label">Response Time</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <i class="bi bi-broadcast hero-stat-icon"></i>
+        <span class="hero-stat-num">Live</span>
+        <span class="hero-stat-label">Predictions</span>
+      </div>
+    </div>
 
-    <input type="number" name="capital.gain" placeholder="Capital Gain"><br><br>
+  </div>
+</section>
 
-    <input type="number" name="capital.loss" placeholder="Capital Loss"><br><br>
+<main class="container main-content" id="predict-section">
 
-    <input type="number" name="hours.per.week" placeholder="Hours per Week"><br><br>
+  <section class="predict-card glass reveal-section" aria-labelledby="predict-heading">
+    <div class="card-glow"></div>
+    <div class="section-kicker"><span class="section-kicker-num">01</span><span class="section-kicker-line"></span><span class="section-kicker-label">Build</span></div>
+    <h2 id="predict-heading" class="section-title"><i class="bi bi-person-badge"></i> Build a profile</h2>
+    <p class="section-subtitle">All fields feed directly into the trained pipeline.</p>
 
-    <input type="text" name="native.country" placeholder="Native Country"><br><br>
+    <form id="predict-form" novalidate>
+      <div class="form-grid">
 
-    <button type="submit">Predict</button>
+        <div class="field">
+          <label for="age"><i class="bi bi-person"></i> Age</label>
+          <input type="number" class="field-input" id="age" name="age" min="17" max="90" placeholder="e.g. 34" required>
+        </div>
 
-</form>
+        <div class="field">
+          <label for="workclass"><i class="bi bi-briefcase"></i> Workclass</label>
+          <select class="field-input field-select" id="workclass" name="workclass" required>
+            <option value="" disabled selected>Select workclass</option>
+            <option>Private</option>
+            <option>Self-emp-not-inc</option>
+            <option>Self-emp-inc</option>
+            <option>Federal-gov</option>
+            <option>Local-gov</option>
+            <option>State-gov</option>
+            <option>Without-pay</option>
+            <option>Never-worked</option>
+          </select>
+        </div>
 
-<h2 id="result"></h2>
+        <div class="field">
+          <label for="fnlwgt"><i class="bi bi-bar-chart"></i> Fnlwgt</label>
+          <input type="number" class="field-input" id="fnlwgt" name="fnlwgt" min="0" placeholder="e.g. 189778" required>
+        </div>
 
-<script>
+        <div class="field">
+          <label for="education"><i class="bi bi-mortarboard"></i> Education</label>
+          <select class="field-input field-select" id="education" name="education" required>
+            <option value="" disabled selected>Select education</option>
+            <option>Bachelors</option>
+            <option>Some-college</option>
+            <option>11th</option>
+            <option>HS-grad</option>
+            <option>Prof-school</option>
+            <option>Assoc-acdm</option>
+            <option>Assoc-voc</option>
+            <option>9th</option>
+            <option>7th-8th</option>
+            <option>12th</option>
+            <option>Masters</option>
+            <option>1st-4th</option>
+            <option>10th</option>
+            <option>Doctorate</option>
+            <option>5th-6th</option>
+            <option>Preschool</option>
+          </select>
+        </div>
 
-document.getElementById("predictForm").addEventListener("submit", async function(e){
+        <div class="field">
+          <label for="education_num"><i class="bi bi-123"></i> Education Number</label>
+          <input type="number" class="field-input" id="education_num" name="education_num" min="1" max="16" placeholder="e.g. 13" required>
+        </div>
 
-    e.preventDefault();
+        <div class="field">
+          <label for="marital_status"><i class="bi bi-heart"></i> Marital Status</label>
+          <select class="field-input field-select" id="marital_status" name="marital_status" required>
+            <option value="" disabled selected>Select marital status</option>
+            <option>Married-civ-spouse</option>
+            <option>Divorced</option>
+            <option>Never-married</option>
+            <option>Separated</option>
+            <option>Widowed</option>
+            <option>Married-spouse-absent</option>
+            <option>Married-AF-spouse</option>
+          </select>
+        </div>
 
-    const form = new FormData(this);
+        <div class="field">
+          <label for="occupation"><i class="bi bi-tools"></i> Occupation</label>
+          <select class="field-input field-select" id="occupation" name="occupation" required>
+            <option value="" disabled selected>Select occupation</option>
+            <option>Tech-support</option>
+            <option>Craft-repair</option>
+            <option>Other-service</option>
+            <option>Sales</option>
+            <option>Exec-managerial</option>
+            <option>Prof-specialty</option>
+            <option>Handlers-cleaners</option>
+            <option>Machine-op-inspct</option>
+            <option>Adm-clerical</option>
+            <option>Farming-fishing</option>
+            <option>Transport-moving</option>
+            <option>Priv-house-serv</option>
+            <option>Protective-serv</option>
+            <option>Armed-Forces</option>
+          </select>
+        </div>
 
-    const data = Object.fromEntries(form.entries());
+        <div class="field">
+          <label for="relationship"><i class="bi bi-people"></i> Relationship</label>
+          <select class="field-input field-select" id="relationship" name="relationship" required>
+            <option value="" disabled selected>Select relationship</option>
+            <option>Wife</option>
+            <option>Own-child</option>
+            <option>Husband</option>
+            <option>Not-in-family</option>
+            <option>Other-relative</option>
+            <option>Unmarried</option>
+          </select>
+        </div>
 
-    data.age = Number(data.age);
-    data.fnlwgt = Number(data.fnlwgt);
-    data["education.num"] = Number(data["education.num"]);
-    data["capital.gain"] = Number(data["capital.gain"]);
-    data["capital.loss"] = Number(data["capital.loss"]);
-    data["hours.per.week"] = Number(data["hours.per.week"]);
+        <div class="field">
+          <label for="race"><i class="bi bi-globe2"></i> Race</label>
+          <select class="field-input field-select" id="race" name="race" required>
+            <option value="" disabled selected>Select race</option>
+            <option>White</option>
+            <option>Asian-Pac-Islander</option>
+            <option>Amer-Indian-Eskimo</option>
+            <option>Other</option>
+            <option>Black</option>
+          </select>
+        </div>
 
-    const response = await fetch("/predictor/predict/",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify(data)
-    });
+        <div class="field">
+          <label for="sex"><i class="bi bi-gender-ambiguous"></i> Sex</label>
+          <select class="field-input field-select" id="sex" name="sex" required>
+            <option value="" disabled selected>Select sex</option>
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+        </div>
 
-    const result = await response.json();
+        <div class="field">
+          <label for="capital_gain"><i class="bi bi-graph-up-arrow"></i> Capital Gain</label>
+          <input type="number" class="field-input" id="capital_gain" name="capital_gain" min="0" placeholder="e.g. 0" required>
+        </div>
 
-    document.getElementById("result").innerHTML =
-        `Prediction: ${result.label}<br>
-         Probability: ${result.probability}`;
+        <div class="field">
+          <label for="capital_loss"><i class="bi bi-graph-down-arrow"></i> Capital Loss</label>
+          <input type="number" class="field-input" id="capital_loss" name="capital_loss" min="0" placeholder="e.g. 0" required>
+        </div>
 
-});
+        <div class="field">
+          <label for="hours_per_week"><i class="bi bi-clock"></i> Hours Per Week</label>
+          <input type="number" class="field-input" id="hours_per_week" name="hours_per_week" min="1" max="99" placeholder="e.g. 40" required>
+        </div>
 
-</script>
+        <div class="field field-wide">
+          <label for="native_country"><i class="bi bi-globe-americas"></i> Native Country</label>
+          <select class="field-input field-select" id="native_country" name="native_country" required>
+            <option value="" disabled selected>Select native country</option>
+            <option>United-States</option>
+            <option>Mexico</option>
+            <option>Philippines</option>
+            <option>Germany</option>
+            <option>Puerto-Rico</option>
+            <option>Canada</option>
+            <option>India</option>
+            <option>England</option>
+            <option>China</option>
+            <option>Cuba</option>
+            <option>Italy</option>
+            <option>South</option>
+            <option>Jamaica</option>
+            <option>Vietnam</option>
+            <option>Japan</option>
+            <option>Other</option>
+          </select>
+        </div>
 
+      </div>
+
+      <button type="submit" class="predict-btn" id="predict-btn">
+        <i class="bi bi-cpu btn-icon"></i>
+        <span class="btn-label">Run Prediction</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+      <p class="form-error" id="form-error" role="alert"><i class="bi bi-exclamation-triangle"></i> <span class="form-error-text"></span></p>
+    </form>
+  </section>
+
+  <section class="result-card glass reveal-section" id="result-card" aria-live="polite">
+    <div class="card-glow"></div>
+    <div class="section-kicker"><span class="section-kicker-num">02</span><span class="section-kicker-line"></span><span class="section-kicker-label">Result</span></div>
+    <div class="result-header">
+      <h2 class="section-title"><i class="bi bi-clipboard-data"></i> Prediction result</h2>
+      <span class="result-badge" id="result-badge"><i class="bi bi-dash-circle"></i> <span class="result-badge-text">Awaiting input</span></span>
+    </div>
+
+    <div class="result-body">
+      <div class="result-main">
+        <span class="result-label"><i class="bi bi-patch-check"></i> Predicted label</span>
+        <span class="result-value" id="result-label">--</span>
+      </div>
+
+      <div class="result-confidence">
+        <div class="confidence-header">
+          <span class="result-label"><i class="bi bi-speedometer2"></i> Confidence</span>
+        </div>
+        <div class="gauge-wrap">
+          <svg class="confidence-gauge" viewBox="0 0 160 160" width="160" height="160">
+            <circle class="gauge-track" cx="80" cy="80" r="68"></circle>
+            <circle class="gauge-fill" id="confidence-fill" cx="80" cy="80" r="68"></circle>
+          </svg>
+          <div class="gauge-center">
+            <span class="confidence-num" id="confidence-num">0%</span>
+            <span class="gauge-caption">confidence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="history-card glass reveal-section" id="history-section" aria-labelledby="history-heading">
+    <div class="card-glow"></div>
+    <div class="section-kicker"><span class="section-kicker-num">03</span><span class="section-kicker-line"></span><span class="section-kicker-label">History</span></div>
+    <div class="history-header">
+      <div>
+        <h2 id="history-heading" class="section-title"><i class="bi bi-clock-history"></i> Prediction history</h2>
+        <p class="section-subtitle">Every request this session, newest first.</p>
+      </div>
+      <div class="history-search">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="history-search-input" placeholder="Search history…">
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="history-table" id="history-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Age</th>
+            <th>Occupation</th>
+            <th>Hours/wk</th>
+            <th>Label</th>
+            <th>Probability</th>
+          </tr>
+        </thead>
+        <tbody id="history-tbody">
+        </tbody>
+      </table>
+      <div class="history-empty" id="history-empty">
+        <i class="bi bi-clipboard2-pulse empty-illustration"></i>
+        <span class="empty-title">No predictions yet</span>
+        <span class="empty-desc">Run your first profile through the model to see it appear here.</span>
+        <a href="#predict-section" class="empty-cta"><i class="bi bi-arrow-up-circle"></i> Build a profile</a>
+      </div>
+    </div>
+
+    <div class="history-cards" id="history-cards"></div>
+  </section>
+
+</main>
+
+<footer class="iq-footer">
+  <div class="container footer-inner">
+    <div class="footer-stack">
+      <span class="footer-built-with">Built with</span>
+      <span class="footer-chip"><i class="bi bi-filetype-py"></i> Python</span>
+      <span class="footer-chip"><i class="bi bi-diagram-3"></i> Django</span>
+      <span class="footer-chip"><i class="bi bi-hdd-network"></i> DRF</span>
+      <span class="footer-chip"><i class="bi bi-bootstrap"></i> Bootstrap</span>
+      <span class="footer-chip"><i class="bi bi-graph-up"></i> Scikit-Learn</span>
+    </div>
+    <div class="footer-social">
+      <a href="#" class="footer-icon-link" aria-label="GitHub"><i class="bi bi-github"></i></a>
+      <a href="#" class="footer-icon-link" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <span class="footer-copy">© 2026 IncomeIQ · Trained on the UCI Adult dataset</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
