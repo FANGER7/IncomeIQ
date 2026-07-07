@@ -46,6 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const comparisonSection = document.getElementById('comparison-section');
   const comparisonGrid = document.getElementById('comparison-grid');
   const downloadReportBtn = document.getElementById('download-report-btn');
+  if (downloadReportBtn) {
+    downloadReportBtn.addEventListener("click", generatePDFReport);
+  }
   const shareBtn = document.getElementById('share-btn');
   const shareMenu = document.getElementById('share-menu');
   const statTotal = document.getElementById('stat-total');
@@ -1144,3 +1147,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadHistory(true);
 });
+
+function generatePDFReport() {
+
+    // Check if jsPDF loaded
+    if (!window.jspdf) {
+        showToast("PDF library failed to load.", "error");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.text("IncomeIQ", 20, 20);
+
+    // Subtitle
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(14);
+    doc.text("AI Powered Income Prediction Report", 20, 30);
+
+    // Divider
+    doc.line(20, 35, 190, 35);
+
+    // Test Content
+    doc.setFontSize(12);
+    doc.text("Congratulations!", 20, 50);
+    doc.text("PDF generation is working successfully.", 20, 60);
+
+    // Download
+    doc.save("IncomeIQ_Report.pdf");
+
+    // Success toast (only if your project already has this function)
+    if (typeof showToast === "function") {
+        showToast("Report downloaded successfully!", "success");
+    }
+}
