@@ -63,13 +63,19 @@ def predict(data):
     Returns: dict with prediction (int), label (str), probability (float)
     Raises: ValueError if required fields missing
     """
-    pipeline    = _load_pipeline()
-    df          = validate_input(data)
-    prediction  = int(pipeline.predict(df)[0])
-    probability = float(pipeline.predict_proba(df)[0][1])
+    pipeline = _load_pipeline()
+    df = validate_input(data)
+
+    prediction = int(pipeline.predict(df)[0])
+
+    probabilities = pipeline.predict_proba(df)[0]
+
+    # Confidence of the predicted class
+    probability = float(probabilities[prediction])
+
     return {
-        "prediction":  prediction,
-        "label":       INCOME_LABELS[prediction],
+        "prediction": prediction,
+        "label": INCOME_LABELS[prediction],
         "probability": round(probability, 4)
     }
 
