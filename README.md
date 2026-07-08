@@ -321,11 +321,7 @@ LinkedIn: https://linkedin.com/in/kanishk-chahar
 
 ---
 
-## License
 
-This project is released under the MIT License.
-
----
 
 <div align="center">
 
