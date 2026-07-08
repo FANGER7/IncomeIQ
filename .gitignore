@@ -1,21 +1,27 @@
 # Virtual Environment
 venv/
+env/
+.venv/
 
-# Python
+# Python Cache
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 
 # Environment Variables
 .env
 
-# Database
+# SQLite Database
 db.sqlite3
 
-# VS Code
+# Collected Static Files
+staticfiles/
+
+# IDE
 .vscode/
+.idea/
 
-# macOS
+# Operating System Files
 .DS_Store
-
-# Windows
 Thumbs.db
