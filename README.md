@@ -4,16 +4,15 @@
 
 ### AI-Powered Income Prediction Platform
 
-Predict annual income using a production-ready Machine Learning pipeline integrated with Django REST Framework and a modern interactive frontend.
+A production-ready Machine Learning application that predicts annual income using **Scikit-learn**, **Django REST Framework**, and a modern responsive frontend.
 
 <p align="center">
-
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-4.2-092E20?style=flat-square&logo=django)
-![DRF](https://img.shields.io/badge/Django-REST%20Framework-red?style=flat-square)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?style=flat-square&logo=bootstrap)
-![License](https://img.shields.io/badge/License-MIT-black?style=flat-square)
+<img src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/Django-4.2-092E20?style=flat-square&logo=django">
+<img src="https://img.shields.io/badge/REST%20API-Django-red?style=flat-square">
+<img src="https://img.shields.io/badge/Scikit--Learn-ML-F7931E?style=flat-square&logo=scikitlearn">
+<img src="https://img.shields.io/badge/Bootstrap-5-7952B3?style=flat-square&logo=bootstrap">
+<img src="https://img.shields.io/badge/License-MIT-black?style=flat-square">
 
 </p>
 
@@ -21,26 +20,34 @@ Predict annual income using a production-ready Machine Learning pipeline integra
 
 ---
 
+# Preview
+
+<p align="center">
+<img src="screenshots/home.png" width="100%" alt="IncomeIQ Homepage">
+</p>
+
+---
+
 ## Overview
 
-IncomeIQ is an end-to-end Machine Learning web application that predicts whether an individual's annual income exceeds **$50K** using demographic and employment-related features.
+IncomeIQ is a full-stack Machine Learning web application that predicts whether an individual's annual income exceeds **$50K** based on demographic and employment information.
 
-The project combines a trained Scikit-learn pipeline with Django REST Framework to expose prediction APIs, while a modern frontend provides an intuitive interface for generating predictions, viewing confidence scores, and exploring prediction history.
+The application combines a trained **Scikit-learn Pipeline**, **Django REST Framework API**, and a premium frontend to provide real-time predictions, confidence scores, AI-generated insights, and prediction history.
 
-The goal of this project is to demonstrate the complete Machine Learning deployment workflow—from preprocessing and model training to REST API development and frontend integration.
+It demonstrates the complete Machine Learning deployment workflow—from preprocessing and model training to REST API integration and frontend deployment.
 
 ---
 
 ## Features
 
-- Machine Learning inference using a trained Scikit-learn pipeline
+- Machine Learning inference using Scikit-learn Pipeline
 - Django REST Framework API
-- Real-time predictions without page reload
-- Probability estimation for every prediction
-- Prediction history stored in SQLite
-- AI-generated prediction report
-- Responsive modern user interface
-- Dark & Light theme support
+- Real-time predictions (AJAX)
+- Probability estimation
+- Prediction history
+- AI Prediction Report
+- Modern responsive interface
+- Dark & Light theme
 - Input validation
 - Modular Django architecture
 
@@ -49,12 +56,54 @@ The goal of this project is to demonstrate the complete Machine Learning deploym
 ## Technology Stack
 
 | Layer | Technologies |
-|--------|--------------|
+|-------|--------------|
 | Machine Learning | Python, Scikit-learn, Pandas, NumPy, Joblib |
 | Backend | Django, Django REST Framework |
 | Database | SQLite |
 | Frontend | HTML5, CSS3, JavaScript, Bootstrap 5 |
 | Development | Git, GitHub, VS Code |
+
+---
+
+## Interface
+
+### Home
+
+<p align="center">
+<img src="screenshots/home.png" width="95%">
+</p>
+
+---
+
+### Prediction Result
+
+<p align="center">
+<img src="screenshots/prediction.png" width="95%">
+</p>
+
+---
+
+### AI Prediction Report
+
+<p align="center">
+<img src="screenshots/report.png" width="95%">
+</p>
+
+---
+
+### Prediction History
+
+<p align="center">
+<img src="screenshots/history.png" width="95%">
+</p>
+
+---
+
+### REST API
+
+<p align="center">
+<img src="screenshots/api-post.png" width="95%">
+</p>
 
 ---
 
@@ -64,21 +113,21 @@ The goal of this project is to demonstrate the complete Machine Learning deploym
                     User
                       │
                       ▼
-            Modern Frontend (HTML/CSS/JS)
+        Modern Frontend (HTML/CSS/JS)
                       │
-             AJAX / Fetch API Request
+              AJAX / Fetch API
                       │
                       ▼
-          Django REST Framework API
+      Django REST Framework Backend
                       │
                       ▼
                inference.py
                       │
                       ▼
-          Trained ML Pipeline (.pkl)
+      Trained ML Pipeline (.pkl)
                       │
                       ▼
-        Prediction + Probability Score
+     Prediction + Probability Score
                       │
                       ▼
         SQLite Prediction History
@@ -112,7 +161,8 @@ IncomeIQ/
 ├── manage.py
 ├── requirements.txt
 ├── README.md
-└── .env.example
+├── .env.example
+└── screenshots/
 ```
 
 ---
@@ -125,7 +175,7 @@ Clone the repository
 git clone https://github.com/<your-username>/IncomeIQ.git
 ```
 
-Navigate to the project
+Navigate into the project
 
 ```bash
 cd IncomeIQ
@@ -137,15 +187,15 @@ Create a virtual environment
 python -m venv venv
 ```
 
-Activate the environment
+Activate it
 
-### Windows
+**Windows**
 
 ```bash
 venv\Scripts\activate
 ```
 
-### Linux / macOS
+**Linux / macOS**
 
 ```bash
 source venv/bin/activate
@@ -170,7 +220,7 @@ Run migrations
 python manage.py migrate
 ```
 
-Start the development server
+Start the server
 
 ```bash
 python manage.py runserver
@@ -184,7 +234,7 @@ http://127.0.0.1:8000/
 
 ---
 
-## REST API
+## API
 
 ### Predict Income
 
@@ -218,54 +268,27 @@ Returns all previously generated predictions.
 
 ---
 
-## Screenshots
-
-> Add your screenshots after uploading them to the repository.
-
-```text
-screenshots/
-│
-├── home.png
-├── prediction.png
-├── ai-report.png
-├── history.png
-├── api-post.png
-└── api-history.png
-```
-
-Example
-
-```markdown
-![Home](screenshots/home.png)
-
-![Prediction](screenshots/prediction.png)
-
-![History](screenshots/history.png)
-```
-
----
-
-## Machine Learning Pipeline
+## Machine Learning Workflow
 
 ```text
 Raw User Input
-        │
-        ▼
+       │
+       ▼
 Input Validation
-        │
-        ▼
-Feature Preprocessing
-        │
-        ▼
+       │
+       ▼
+Feature Engineering
+       │
+       ▼
 Scikit-learn Pipeline
-        │
-        ▼
+       │
+       ▼
 Prediction
-        │
-        ▼
-Probability Score
-        │
-        ▼
+       │
+       ▼
+Probability Estimation
+       │
+       ▼
 Store Prediction History
 ```
 
@@ -273,14 +296,14 @@ Store Prediction History
 
 ## Roadmap
 
-- Docker support
-- PostgreSQL integration
+- Docker Deployment
+- PostgreSQL Support
 - SHAP Explainability
-- Batch prediction
-- User authentication
-- Cloud deployment
-- Model monitoring
-- PDF report export
+- Batch Prediction
+- User Authentication
+- Cloud Deployment
+- Model Monitoring
+- PDF Export
 
 ---
 
@@ -292,7 +315,7 @@ B.Tech Computer Science Engineering
 
 Machine Learning • Artificial Intelligence • Full Stack Development
 
-GitHub: https://github.com/<FANGER7>
+GitHub: https://github.com/FANGER7
 
 LinkedIn: https://linkedin.com/in/kanishk-chahar
 
@@ -300,4 +323,14 @@ LinkedIn: https://linkedin.com/in/kanishk-chahar
 
 ## License
 
-This project was developed for educational, internship, and portfolio purposes.
+This project is released under the MIT License.
+
+---
+
+<div align="center">
+
+### If you found this project interesting, consider giving it a ⭐ on GitHub.
+
+Built with Python • Django • Scikit-learn
+
+</div>
