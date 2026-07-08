@@ -983,20 +983,64 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function normalizeHistoryItem(item, index) {
-    const label = item.label ?? (item.prediction === 1 ? '>50K' : '<=50K');
-    const probability = typeof item.probability === 'number' ? item.probability : 0;
+
+    const inputs = item.inputs || {};
+
+    const label = item.label ?? (item.prediction === 1 ? ">50K" : "<=50K");
+
+    const probability =
+        typeof item.probability === "number"
+            ? item.probability
+            : 0;
 
     return {
-      index: index + 1,
-      age: item.age ?? '—',
-      occupation: item.occupation ?? '—',
-      hoursPerWeek: item['hours.per.week'] ?? item.hours_per_week ?? item.hours ?? '—',
-      label,
-      probability,
-      tier: classifyLabel(label, probability),
-      raw: item
+
+        index: index + 1,
+
+        age: inputs.age ?? "—",
+
+        occupation: inputs.occupation ?? "—",
+
+        hoursPerWeek:
+            inputs["hours.per.week"] ??
+            inputs.hours_per_week ??
+            "—",
+
+        education:
+            inputs.education ?? "—",
+
+        maritalStatus:
+            inputs["marital.status"] ??
+            "—",
+
+        capitalGain:
+            inputs["capital.gain"] ?? 0,
+
+        capitalLoss:
+            inputs["capital.loss"] ?? 0,
+
+        relationship:
+            inputs.relationship ?? "—",
+
+        race:
+            inputs.race ?? "—",
+
+        sex:
+            inputs.sex ?? "—",
+
+        nativeCountry:
+            inputs["native.country"] ?? "—",
+
+        label,
+
+        probability,
+
+        tier: classifyLabel(label, probability),
+
+        raw: item
+
     };
-  }
+}
 
   function matchesSearch(entry, query) {
     if (!query) return true;
