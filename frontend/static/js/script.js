@@ -726,18 +726,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateStats() {
+
     if (!statTotal) return;
+
     const total = historyData.length;
-    const above = historyData.filter((e) => e.tier === 'high').length;
-    const below = total - above;
-    const avgConfidence = total ? Math.round((historyData.reduce((sum, e) => sum + e.probability, 0) / total) * 1000) / 10 : 0;
 
-    animateCounter(statTotal, total, '');
-    animateCounter(statAbove, above, '');
-    animateCounter(statBelow, below, '');
-    animateCounter(statAvgConfidence, avgConfidence, '%');
-  }
+    const above = historyData.filter(
+        item => item.label === ">50K"
+    ).length;
 
+    const below = historyData.filter(
+        item => item.label === "<=50K"
+    ).length;
+
+    const avgConfidence = total
+        ? historyData.reduce(
+            (sum, item) => sum + item.probability,
+            0
+          ) / total
+        : 0;
+
+    const highestConfidence = total
+        ? Math.max(
+            ...historyData.map(item => item.probability)
+          )
+        : 0;
+
+    const today = new Date().toDateString();
+
+    const todayPredictions = historyData.filter(item => {
+
+        if (!item.raw.created_at) return false;
+
+        return new Date(item.raw.created_at)
+            .toDateString() === today;
+
+    }).length;
+
+    animateCounter(statTotal, total, "");
+
+    animateCounter(statAbove, above, "");
+
+    animateCounter(statBelow, below, "");
+
+    animateCounter(
+        statAvgConfidence,
+        (avgConfidence * 100).toFixed(1),
+        "%"
+    );
+
+    animateCounter(
+        document.getElementById("stat-highest-confidence"),
+        (highestConfidence * 100).toFixed(1),
+        "%"
+    );
+
+    animateCounter(
+        document.getElementById("stat-today"),
+        todayPredictions,
+        ""
+    );
+
+}
   function buildPredictionShareText() {
     if (!lastReportData) return 'No prediction has been run yet.';
     return `IncomeIQ Prediction: ${lastReportData.label} (${lastReportData.category}) — Confidence ${lastReportData.pct}%`;
@@ -1150,39 +1200,120 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function generatePDFReport() {
 
-    // Check if jsPDF loaded
     if (!window.jspdf) {
-        showToast("PDF library failed to load.", "error");
+        if (typeof showToast === "function") {
+            showToast("PDF library failed to load.", "error");
+        }
         return;
     }
 
     const { jsPDF } = window.jspdf;
-
     const doc = new jsPDF();
 
-    // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.text("IncomeIQ", 20, 20);
+    // -------------------------
+    // Collect Current Data
+    // -------------------------
 
-    // Subtitle
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(14);
-    doc.text("AI Powered Income Prediction Report", 20, 30);
+    const prediction =
+        document.getElementById("result-label")?.innerText || "--";
 
-    // Divider
-    doc.line(20, 35, 190, 35);
+    const confidence =
+        document.getElementById("confidence-num")?.innerText || "--";
 
-    // Test Content
+    const aiReport =
+        document.getElementById("report-summary-text")?.innerText ||
+        "No AI report generated.";
+
+    const date = new Date().toLocaleString();
+
+    // -------------------------
+    // Header
+    // -------------------------
+
+    doc.setFillColor(79, 70, 229);
+    doc.rect(0, 0, 210, 28, "F");
+
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(24);
+    doc.setFont("helvetica","bold");
+    doc.text("IncomeIQ",20,18);
+
+    doc.setFontSize(11);
+    doc.text("AI Powered Income Prediction Report",20,24);
+
+    doc.setTextColor(0,0,0);
+
+    // -------------------------
+    // Prediction Summary
+    // -------------------------
+
+    let y = 42;
+
+    doc.setFontSize(18);
+    doc.setFont("helvetica","bold");
+    doc.text("Prediction Summary",20,y);
+
+    y += 12;
+
     doc.setFontSize(12);
-    doc.text("Congratulations!", 20, 50);
-    doc.text("PDF generation is working successfully.", 20, 60);
+    doc.setFont("helvetica","normal");
 
-    // Download
+    doc.text(`Prediction : ${prediction}`,20,y);
+
+    y += 8;
+
+    doc.text(`Confidence : ${confidence}`,20,y);
+
+    y += 8;
+
+    doc.text(`Generated : ${date}`,20,y);
+
+    // -------------------------
+    // Divider
+    // -------------------------
+
+    y += 12;
+
+    doc.line(20,y,190,y);
+
+    // -------------------------
+    // AI Report
+    // -------------------------
+
+    y += 12;
+
+    doc.setFontSize(18);
+    doc.setFont("helvetica","bold");
+    doc.text("AI Prediction Report",20,y);
+
+    y += 10;
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica","normal");
+
+    const reportLines = doc.splitTextToSize(aiReport,170);
+
+    doc.text(reportLines,20,y);
+
+    y += reportLines.length*6+10;
+
+    // -------------------------
+    // Footer
+    // -------------------------
+
+    doc.line(20,280,190,280);
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Generated by IncomeIQ | Machine Learning Pipeline | Scikit-Learn",
+        20,
+        287
+    );
+
     doc.save("IncomeIQ_Report.pdf");
 
-    // Success toast (only if your project already has this function)
-    if (typeof showToast === "function") {
-        showToast("Report downloaded successfully!", "success");
+    if(typeof showToast==="function"){
+        showToast("Report downloaded successfully!","success");
     }
 }
