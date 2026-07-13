@@ -89,6 +89,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initTheme();
 
+  const educationMap = {
+    "Preschool": 1,
+    "1st-4th": 2,
+    "5th-6th": 3,
+    "7th-8th": 4,
+    "9th": 5,
+    "10th": 6,
+    "11th": 7,
+    "12th": 8,
+    "HS-grad": 9,
+    "Some-college": 10,
+    "Assoc-voc": 11,
+    "Assoc-acdm": 12,
+    "Bachelors": 13,
+    "Masters": 14,
+    "Prof-school": 15,
+    "Doctorate": 16
+  };
+
+  document.getElementById("education").addEventListener("change", function () {
+    document.getElementById("education_num").value =
+        educationMap[this.value];
+});
   function showToast(type, message, duration) {
     if (!toastStack) return;
 
